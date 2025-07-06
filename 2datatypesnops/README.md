@@ -139,6 +139,126 @@ var cities = map[string]string{"IN": "Delhi", "US": "New York"}
 ```
 
 ---
+#### Constants and iota:
+
+In Go (Golang), `iota` is a **predeclared identifier** used to simplify the definition of **incrementing constants**. It's most commonly used within `const` blocks to generate a sequence of related values.
+
+##### How `iota` works:
+
+* It starts at **0** in each `const` block.
+* It increments by **1** for each new line in the block.
+* You can use it with expressions to generate patterns (e.g., bit shifting, enums, masks).
+
+---
+
+##### 🔹 Basic Example:
+
+```go
+const (
+    A = iota // 0
+    B        // 1
+    C        // 2
+)
+```
+
+This is equivalent to:
+
+```go
+const (
+    A = 0
+    B = 1
+    C = 2
+)
+```
+
+---
+
+##### 🔹 Using Expressions:
+
+```go
+const (
+    _  = iota             // ignore first value (0)
+    KB = 1 << (10 * iota) // 1 << (10*1)
+    MB = 1 << (10 * iota) // 1 << (10*2)
+    GB = 1 << (10 * iota) // 1 << (10*3)
+)
+```
+
+Output values:
+
+* `KB = 1024`
+* `MB = 1048576`
+* `GB = 1073741824`
+
+---
+
+##### 🔹 Skipping Values:
+
+You can use `_` to skip an `iota` value:
+
+```go
+const (
+    Red = iota
+    _
+    Blue
+)
+```
+
+Here, `Red = 0`, `Blue = 2`
+
+---
+
+##### 🔹 Mixing with Other Constants:
+
+```go
+const (
+    FlagNone = 0
+    FlagA    = 1 << iota // 1 << 0 = 1
+    FlagB                // 1 << 1 = 2
+    FlagC                // 1 << 2 = 4
+)
+```
+
+This is useful for creating **bit masks**.
+
+#### Creating Enums with Custom Types:
+
+```go
+package main
+
+import "fmt"
+
+// Custom type for LogLevel
+type LogLevel int
+
+const (
+    Debug LogLevel = iota // 0
+    Info                  // 1
+    Warning               // 2
+    Error                 // 3
+    Fatal                 // 4
+)
+
+func (l LogLevel) String() string {
+    return [...]string{"Debug", "Info", "Warning", "Error", "Fatal"}[l]
+}
+
+func main() {
+    level := Warning
+    fmt.Println("Log Level:", level)         // Output: Log Level: 2
+    fmt.Println("Log Level:", level.String()) // Output: Log Level: Warning
+}
+```
+
+---
+
+##### Summary:
+
+* `iota` is reset to `0` in every new `const` block.
+* It’s great for enums, flags, and patterns.
+* It's evaluated at **compile time**, so no runtime cost.
+
+---
 
 ### 5. **Operators in Go**
 
