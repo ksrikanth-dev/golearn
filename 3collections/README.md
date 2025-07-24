@@ -133,12 +133,17 @@ fmt.Println(s1) // Output: [100 2 3] — because slices share underlying array (
 ### 🧪 Code Example:
 
 ```go
-var arr [3]int
+var arr [3]int // creates array with zero value of int [0, 0, 0]
 arr[0] = 10
 arr[1] = 20
 arr[2] = 30
 
 for i, v := range arr {
+    fmt.Printf("Index %d: %d\n", i, v)
+}
+
+var strArr [3]string // creates array with zero value of string ["", "", ""]
+for i, v := range strArr {
     fmt.Printf("Index %d: %d\n", i, v)
 }
 ```
@@ -210,10 +215,21 @@ This is especially useful when you want to preallocate space for performance.
 ```go
 var a []int         // nil slice
 b := []int{}        // empty slice
+
+// note: append() can work with nil slice too.
+a = append(a, 1, 2, 3) // works even if a is nil slice
 ```
 
 Both are safe to use in most operations, but they behave differently when checked against `nil`.
 
+```go
+// Different ways to create a slice
+var a []int              // nil slice
+var b []int{1,2,3,4}     // slice initialized with elements
+b := []int{}             // empty slice - commonly used
+c := []int{1,2,3}        // slice initialized with elements
+d := make([]int, 3, 5)   // empty slice with predefined length and capacity
+```
 ---
 
 ### 5. **Iterating slices**
@@ -335,16 +351,58 @@ colors := map[string]string{
 ```
 
 ### b) **Using `make()`**:
+`In Go, you can create a map with an initial size (capacity) using the built-in `make` function:
+
+---
+
+#### ✅ Syntax
 
 ```go
-scores := make(map[string]int)
-scores["John"] = 85
+m := make(map[KeyType]ValueType, initialCapacity)
 ```
+
+* `KeyType` and `ValueType` are the types for the map.
+* `initialCapacity` is **optional**, but if provided, Go will preallocate space to reduce allocations as the map grows.
+* `initialCapacity` avoids repeated rehashing and resizing (until the capacity is reached), improving performance.
+
+---
+
+#### ✅ Example
+
+```go
+m := make(map[string]int, 100) // Preallocate for ~100 map/hash buckets
+
+m["one"] = 1
+m["two"] = 2
+
+fmt.Println(len(m)) // Output: 2
+
+scores := make(map[string]int) // without preallocating the map/hash buckets
+scores["John"] = 85
+
+```
+---
+
+### 📝 Notes
+
+* The capacity is **not a hard limit**; the map can grow beyond the initial size.
+* Unlike slices, we can't retrieve the capacity of a map using `cap()`.
+---
 
 ### c) **Zero value is nil map**:
 
 ```go
 var data map[string]int // nil map, cannot insert until initialized!!
+```
+
+```go
+// Different ways to create a map
+var a map[string]int                                  // nil map
+var b map[string]int{"admin": 30, "employee": 20}     // map initialized with key-value pairs
+b := map[string]int{}                                 // empty map - commonly used
+c := map[string]int{"admin": 30, "employee": 20}      // map initialized key-value pairs
+d := make(map[string]int, 5)   // empty map with predefined capacity
+e := make(map[string]int)      // empty map without predefined capacity
 ```
 
 ---
