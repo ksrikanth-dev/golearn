@@ -312,16 +312,14 @@ ages := map[string]int{"Alice": 25, "Bob": 30}
 * Dynamically sized
 * Fast lookups, inserts, deletes (average O(1))
 * Keys must be **comparable** (can’t be slices, maps, or functions)
-|    Field Type in Struct       |  Can Be Map Key? |
-| ------------------------------|  --------------- |
-| int, float64                  | ✅ Yes           |
-| string, bool                  | ✅ Yes           |
-| array (of comparable)         | ✅ Yes           |
-| slice, map, func              | ❌ No            |
-| another struct (comparable)   | ✅ Yes           |
-| another struct                | ✅ Yes           |
-|    (with uncomparable fields) |                   |
-
+| Field Type in Struct           | Can Be Map Key?    |
+|-------------------------------|--------------------|
+| `int`, `float64`              | ✅ Yes             |
+| `string`, `bool`              | ✅ Yes             |
+| `array` (of comparable types) | ✅ Yes             |
+| `slice`, `map`, `func`        | ❌ No              |
+| another struct (comparable)   | ✅ Yes             |
+| another struct                | ❌ No *(if contains uncomparable fields)* |
 
 ---
 
