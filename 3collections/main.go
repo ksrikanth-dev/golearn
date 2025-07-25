@@ -46,7 +46,11 @@ func main() {
 	}
 	fmt.Printf("%v", s)
 
-	keys := []string{"Bob", "Alice"}
+	keys := []string{}
+	for key, _ := range m {
+		keys = append(keys, key)
+	}
+	fmt.Println("keys: ", keys)
 	for _, key := range keys {
 		s1 = append(s1, map[string]int{key: m[key]})
 	}

@@ -398,10 +398,11 @@ var data map[string]int // nil map, cannot insert until initialized!!
 
 ```go
 // Different ways to create a map
-var a map[string]int                                  // nil map
+var a map[string]int                                  // nil map - no memory is allocated, key-values can be assigned only after initialization
 var b map[string]int{"admin": 30, "employee": 20}     // map initialized with key-value pairs
-b := map[string]int{}                                 // empty map - commonly used
+b := map[string]int{}                                 // empty map - commonly used - memory is already allocated, but doesn't have any key-value pairs yet
 c := map[string]int{"admin": 30, "employee": 20}      // map initialized key-value pairs
+// For the below maps, memory allocation is already done, so key-value pairs assignment doesn't need any initialization:
 d := make(map[string]int, 5)   // empty map with predefined capacity
 e := make(map[string]int)      // empty map without predefined capacity
 ```
