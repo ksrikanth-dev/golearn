@@ -196,6 +196,7 @@ fmt.Println(s) // [20, 30, 40, 60, 999]
 ### 3. **`make` function**
 
 The `make` function is used to create slices with a specified length and capacity. It allocates an underlying array and returns a slice referencing it.
+Note: Capacity is optional. If it's not provided, length is taken as capacity.
 
 ```go
 s := make([]int, 3, 5) // length: 3, capacity: 5
@@ -224,11 +225,13 @@ Both are safe to use in most operations, but they behave differently when checke
 
 ```go
 // Different ways to create a slice
-var a []int              // nil slice
-var b []int{1,2,3,4}     // slice initialized with elements
-b := []int{}             // empty slice - commonly used
-c := []int{1,2,3}        // slice initialized with elements
-d := make([]int, 3, 5)   // empty slice with predefined length and capacity
+var a []int                // nil slice
+var b = []int{1,2,3,4}     // slice initialized with elements
+c := []int{}               // empty slice - commonly used
+d := []int{1,2,3}          // slice initialized with elements
+e := make([]int, 0)        // empty slice
+d := make([]int, 5)        // slice of length and capacity of 5, initialized with zeros
+d := make([]int, 3, 5)     // slice with predefined length and capacity, initialized with zeros
 ```
 ---
 
@@ -399,12 +402,12 @@ var data map[string]int // nil map, cannot insert until initialized!!
 ```go
 // Different ways to create a map
 var a map[string]int                                  // nil map - no memory is allocated, key-values can be assigned only after initialization
-var b map[string]int{"admin": 30, "employee": 20}     // map initialized with key-value pairs
-b := map[string]int{}                                 // empty map - commonly used - memory is already allocated, but doesn't have any key-value pairs yet
-c := map[string]int{"admin": 30, "employee": 20}      // map initialized key-value pairs
+var b = map[string]int{"admin": 30, "employee": 20}     // map initialized with key-value pairs
+c := map[string]int{}                                 // empty map - commonly used - memory is already allocated, but doesn't have any key-value pairs yet
+d := map[string]int{"admin": 30, "employee": 20}      // map initialized with key-value pairs
 // For the below maps, memory allocation is already done, so key-value pairs assignment doesn't need any initialization:
-d := make(map[string]int, 5)   // empty map with predefined capacity
-e := make(map[string]int)      // empty map without predefined capacity
+e := make(map[string]int, 5)   // empty map with predefined capacity
+f := make(map[string]int)      // empty map without predefined capacity
 ```
 
 ---
