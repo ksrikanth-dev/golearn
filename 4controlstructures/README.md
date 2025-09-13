@@ -20,7 +20,7 @@ Control structures dictate the flow of execution within a Go program. Understand
 * Conditional: `if`, `if-else`, `if-else if`
 * Multi-branch: `switch`, `type switch`
 * Looping: `for`, `for-range`
-* Control flow: `break`, `continue`, `goto`
+* Control flow: `break`, `fallthrough`, `continue`, `goto`
 * Error handling: `defer`, `panic`, `recover` (will be discussed separately in future session)
 
 ---
@@ -291,7 +291,7 @@ for _, _ := range nums {
 
 ---
 
-## Control Keywords – `break`, `continue`, `goto`
+## Control Keywords – `break`, `fallthrough`, `continue`, `goto`
 
 Manipulate loop execution using control statements.
 
